@@ -1,20 +1,3 @@
-import subprocess
-import sys
-from pathlib import Path
-
-# 自动下载LangChain文档
-if not Path("langchain").exists():
-    import streamlit as st
-    st.info("📥 首次运行，正在下载LangChain文档...")
-    with st.spinner("下载中，请稍候（约1-2分钟）..."):
-        result = subprocess.run([sys.executable, "setup_docs.py"])
-        if result.returncode == 0:
-            st.success("✅ 文档下载完成！")
-            st.rerun()
-        else:
-            st.error("❌ 文档下载失败")
-            st.stop()
-
 import streamlit as st
 import os
 import sys
