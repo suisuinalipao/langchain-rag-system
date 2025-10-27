@@ -162,11 +162,11 @@ class RAGSystem:
         print("=" * 60)
 
         sample_questions = [
-            "什么是LangChain？",
-            "如何创建一个LLM链？",
-            "LangChain中的Memory组件有哪些？",
-            "如何使用Agent？",
-            "什么是RAG？"
+            "LangSmith 的核心功能是什么？它如何提升 AI 应用的可观测性与可评估性？",
+            "angChain 如何帮助开发者在不同 LLM 模型之间做出平衡决策（准确率、延迟、成本）？",
+            "LangChain 生态系统中有哪些主要组件？它们之间是什么关系？",
+            "angChain 的主要目标是什么？它希望帮助开发者解决哪些问题？",
+            "LangChain 的 “retriever（检索器）” 接口在 RAG 应用中扮演了什么角色？"
         ]
 
         print("\n🔍 示例问题:")
