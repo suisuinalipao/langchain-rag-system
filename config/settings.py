@@ -1,8 +1,19 @@
 import os
 from typing import Dict,Any,Optional
 from dataclasses import dataclass,field
-from dotenv import load_dotenv
-load_dotenv()
+
+# 添加 dotenv 支持
+try:
+    from dotenv import load_dotenv
+    import os as os_path
+    # 获取当前文件所在的目录
+    current_dir = os_path.path.dirname(os_path.path.abspath(__file__))
+    # 构建 .env 文件的路径
+    env_path = os_path.path.join(current_dir, '..', '.env')
+    # 加载 .env 文件
+    load_dotenv(env_path)
+except ImportError:
+    pass
 
 @dataclass
 class ModelConfig:
@@ -63,8 +74,8 @@ class Settings:
 
         #嵌入模型配置
         self.embedding_config = EmbeddingConfig(
-            provider=os.getenv("EMBEDDING_PROVIDER", "deepseek"),
-            model_name=os.getenv("EMBEDDING_MODEL", "deepseek-embeddings"),
+            provider=os.getenv("EMBEDDING_PROVIDER", "huggingface"),
+            model_name=os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
             api_key=os.getenv("DEEPSEEK_API_KEY")
         )
 
@@ -88,9 +99,15 @@ class Settings:
 
         )
 
-        #文档路径
-        self.docs_path = os.getenv("DOCS_PATH", "langchain/docs/docs")
-
+        # 文档路径
+        # 使用项目根目录作为基准来定位文档路径
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # 回到项目根目录
+        project_root = os.path.dirname(project_root)
+        default_docs_path = os.path.join(project_root, "langchain_konwledge_base", "docs", "docs")
+        self.docs_path = os.getenv("DOCS_PATH", default_docs_path)
+        # 确保路径为绝对路径
+        self.docs_path = os.path.abspath(self.docs_path)
     def validate_config(self):
         """
         验证配置的完整性
