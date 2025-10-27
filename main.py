@@ -113,11 +113,19 @@ class RAGSystem:
         """
         #1.加载文档
         loader = DocumentLoader(self.settings.docs_path)
-        chunk = loader.load_documents()
+        documents = loader.load_documents()
+        
+        # 检查是否成功加载文档
+        if not documents:
+            raise RAGSystemError(f"未能从路径 {self.settings.docs_path} 加载任何文档")
 
         #2.处理文档
         processor = TextProcessor(self.settings.processing_config)
-        chunks = processor.process_documents(chunk)
+        chunks = processor.process_documents(documents)
+        
+        # 检查是否有生成chunks
+        if not chunks:
+            raise RAGSystemError("文档处理后未生成任何文本块")
 
         #3.向量化(创建向量存储)
         self.vector_store_manager = VectorStoreManager(

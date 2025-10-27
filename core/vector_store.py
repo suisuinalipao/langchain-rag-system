@@ -24,6 +24,12 @@ class ChromaVectorStore(BaseVectorStore):
         添加chunks到向量存储中
         """
         self.logger.info(f"开始添加{len(chunks)}个chunks到向量存储中...")
+        
+        # 检查chunks是否为空
+        if not chunks:
+            self.logger.warning("没有chunks需要添加到向量存储中")
+            return
+            
         try:
             #准备文档内容和元数据
             texts = [chunk.content for chunk in chunks]

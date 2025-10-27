@@ -21,9 +21,16 @@ class DocumentLoader:
         self.logger.info(f"开始从{self.docs_path}加载文档...")
 
         if not os.path.exists(self.docs_path):
-            raise DocumentLoadError(f"文档路径{self.docs_path}")
+            raise DocumentLoadError(f"文档路径不存在: {self.docs_path}")
 
         try:
+            # 检查目录是否为空
+            docs_files = [f for f in os.listdir(self.docs_path) if f.endswith('.md') or f.endswith('.mdx')]
+            if not docs_files:
+                self.logger.warning(f"文档路径 {self.docs_path} 中没有找到 .md 或 .mdx 文件")
+            
+            self.logger.info(f"在 {self.docs_path} 中找到 {len(docs_files)} 个文档文件")
+            
             # 使用langchain的DirectLoader加载所有文档
             loader = DirectoryLoader(
                 self.docs_path,
@@ -45,6 +52,21 @@ class DocumentLoader:
             # UnstructuredMarkdownLoader 专门处理Markdown文件
             # 它能解析Markdown结构，提取文本内容
             langchain_docs = loader.load()
+            
+            self.logger.info(f"DirectoryLoader 加载了 {len(langchain_docs)} 个文档")
+
+            # 尝试使用不同的glob模式加载.md和.mdx文件
+            if len(langchain_docs) == 0:
+                self.logger.info("未找到.md文件，尝试加载.mdx文件...")
+                loader_mdx = DirectoryLoader(
+                    self.docs_path,
+                    glob="**/*.mdx",
+                    loader_cls=UnstructuredMarkdownLoader,
+                    recursive=True,
+                    show_progress=True
+                )
+                langchain_docs = loader_mdx.load()
+                self.logger.info(f"DirectoryLoader (mdx) 加载了 {len(langchain_docs)} 个文档")
 
             # 将langchain的文档转换为Document对象
             documents = []
@@ -79,39 +101,3 @@ class DocumentLoader:
 
         except Exception as e:
             raise DocumentLoadError(f"加载文档{file_path}时出错: {e}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
