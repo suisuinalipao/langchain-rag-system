@@ -97,7 +97,7 @@ else:
         st.subheader("常见问题示例:")
         example_questions = [
             "如何使用embed_query方法嵌入单个查询文本？",
-            "LangChain多种嵌入模型集成的主要内容是什么？",
+            "什么是LangChain？",
             "如何使用OpenAIEmbeddings创建嵌入模型"
         ]
         
