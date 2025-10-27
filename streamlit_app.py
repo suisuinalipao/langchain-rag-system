@@ -96,9 +96,9 @@ else:
         # 添加示例问题按钮
         st.subheader("常见问题示例:")
         example_questions = [
-            "什么是LangChain？",
-            "如何创建一个LLM链？",
-            "LangChain中的Memory组件有哪些？"
+            "RAG 系统的两个核心概念分别是什么？",
+            "RAG pipeline 通常包含哪几个步骤？",
+            "与模型微调等知识注入技术相比，使用检索系统有哪些优势？"
         ]
         
         # 创建示例行
