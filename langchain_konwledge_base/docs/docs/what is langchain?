@@ -1,0 +1,13 @@
+LangChain is a framework designed to help developers build applications powered by large language models (LLMs) more easily and effectively.
+
+It provides standardized interfaces, tools for orchestration, and observability features that simplify the process of connecting different AI components—such as models, retrievers, and memory systems—into complex, reasoning-based applications.
+
+In short, LangChain helps developers:
+
+Integrate different LLMs and data sources through a unified interface.
+
+Orchestrate multiple components (like agents or tools) to perform complex tasks.
+
+Evaluate and monitor their applications using tools like LangSmith.
+
+Together, LangChain, LangGraph (for orchestration), and LangSmith (for observability and evaluation) form an ecosystem that enables developers to build powerful, reliable, and intelligent AI applications.
